@@ -1,10 +1,11 @@
 import { Router } from "express";
 import ProductManager from "../managers/Productmanager.js";
+import { io } from "../app.js";
 
 const router = Router();
 
 // inicializamos el json
-const productManager = new ProductManager('./src/data/products.json');
+const productManager = new ProductManager('./data/products.json');
 
 // get => obtener datos de los productos
 router.get('/', async(req, res)=>{
@@ -22,6 +23,8 @@ router.get('/:id', async(req, res)=> {
 // post => agregar un producto
 router.post('/', async(req, res) => {
     const newProduct = await productManager.addProduct(req.body);
+    const products = await productManager.getProducts();
+    io.emit('productosActualizados', products); // emite la lista actualizada de productos a todos los clientes conectados
     res.status(201).json(newProduct);
 })
 

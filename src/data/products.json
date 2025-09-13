@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "title": "Producto1",
+    "description": "Descripcion1",
+    "code": "1NDBR3",
+    "price": 20,
+    "status": true,
+    "stock": 3,
+    "category": "category1",
+    "thumbnails": []
+  },
+  {
+    "id": 2,
+    "title": "Prodcuto2",
+    "description": "Descripcion2",
+    "code": "61237C97",
+    "price": 1,
+    "status": true,
+    "stock": 2,
+    "category": "AJAJSB32",
+    "thumbnails": []
+  },
+  {
+    "id": 3,
+    "title": "Producto3",
+    "description": "Descripcion3",
+    "code": "2NB5I4",
+    "price": 33,
+    "status": true,
+    "stock": 2,
+    "category": "Categoria3",
+    "thumbnails": []
+  },
+  {
+    "id": 4,
+    "title": "Producto4",
+    "description": "Descripcion4",
+    "code": "CCAD9AED",
+    "price": 4,
+    "status": true,
+    "stock": 1,
+    "category": "Categoria4",
+    "thumbnails": []
+  }
+]

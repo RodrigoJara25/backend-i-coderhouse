@@ -1,0 +1,36 @@
+<h1>Vista Real Time Products</h1>
+
+<p>
+    En esta vista se pueden agregar productos en tiempo real utilizando Web Sockets.
+    Lo que se hace es enviar el formulario con los datos del producto a agregar por http (fetch con method POST) y suscribirse a un evento socket "productosActualziados"
+</p>
+<p>
+    En el servidor, cuando se realiza un post, se agrega el producto a la base de datos y se emite el evento "productosActualziados" con la lista actualizada de productos.
+    En el cliente, al recibir el evento, se actualiza la lista de productos en pantalla.
+</p>
+<p>De esta manera estamos usando HTTP para el envio y obtencion de los productos, mientras que usamos websockets para la actualizacion en pantalla en tiempo real de los mismos.
+</p>
+
+<p><strong>ALERTA: subida de imagenes aun no probado, puede generar fallos.</strong> </p>
+
+<h2>Lista de Productos Agregados con Web Sockets</h2>
+
+<ul id="listaProductos"></ul>
+
+<h2>Agregar un producto</h2>
+
+<form id="formAgregarProducto">
+    <input type="text" id="title" name="title" placeholder="Title" required>
+    <input type="text" id="description" name="description" placeholder="Description" required>
+    <input type="text" id="code" name="code" placeholder="Code" required>
+    <input type="number" id="price" name="price" placeholder="Price" required>
+    <input type="number" id="stock" name="stock" placeholder="Stock" required>
+    <input type="text" id="category" name="category" placeholder="Category" required>
+    <input type="file" id="thumbnails" name="thumbnails" placeholder="Thumbnails">
+    <button type="submit">Agregar Producto</button>
+</form>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/main.js"></script>

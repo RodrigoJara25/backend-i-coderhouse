@@ -42,5 +42,16 @@
     "stock": 1,
     "category": "Categoria4",
     "thumbnails": []
+  },
+  {
+    "id": 5,
+    "title": "Producto 5",
+    "description": "Descripcion 5",
+    "code": "61237C97",
+    "price": 7,
+    "status": true,
+    "stock": 1,
+    "category": "Categoria 2",
+    "thumbnails": []
   }
 ]

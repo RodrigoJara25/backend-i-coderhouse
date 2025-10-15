@@ -6,6 +6,8 @@ import productsRouter from './routers/products.router.js';
 import cartsRouter from './routers/carts.router.js';
 import viewsRouter from './routers/views.router.js';
 
+import mongoose from 'mongoose';
+
 const app = express();
 
 const PORT = 8080;
@@ -35,23 +37,36 @@ app.get('/', async (req, res) => {
     }
 });
 
-const httpServer = app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+let io;
 
-const io = new Server(httpServer);
-
-io.on('connection', async (socket) => {
-    console.log('Nuevo cliente conectado');
-
+const main = async() => {
     try {
-        const response = await fetch(`http://localhost:${PORT}/api/products`);
-        const productosActualizados = await response.json();
-        // mandar los productos actualizados a los clientes
-        io.emit('productosActualizados', productosActualizados)
+        await mongoose.connect("mongodb+srv://rodrigo:1234@cluster0.s85oick.mongodb.net/backend?retryWrites=true&w=majority&appName=Cluster0")
+
+        const httpServer = app.listen(PORT, () => {
+            console.log(`Server is running on http://localhost:${PORT}`);
+        });
+
+        io = new Server(httpServer);
+
+        io.on('connection', async (socket) => {
+            console.log('Nuevo cliente conectado');
+        
+            try {
+                const response = await fetch(`http://localhost:${PORT}/api/products`);
+                const productosActualizados = await response.json();
+                // mandar los productos actualizados a los clientes
+                io.emit('productosActualizados', productosActualizados)
+            } catch (error) {
+                console.error('Error al recuperar productos:', error);
+            }
+        });
+
     } catch (error) {
-        console.error('Error al recuperar productos:', error);
+        console.error('Error al conectador a MongoDB:', error);
     }
-})
+}
+
+main();
 
 export { io };

@@ -1,15 +1,14 @@
-import {promises as fs} from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+// import {promises as fs} from 'fs';
+// import path from 'path';
+// import { fileURLToPath } from 'url';
+import Product from "../models/Product.js";
 
+// YA NO USAMOS ESTO PORQUE VAMOS A MONGODB
 // configuracion __dirname en modulos
-const __filename = fileURLToPath(import.meta.url);  // comnvierte url en rutas de archivo
-const __dirname = path.dirname(__filename);     // convierte la ruta del archivo actual en una normal
+// const __filename = fileURLToPath(import.meta.url);  // comnvierte url en rutas de archivo
+// const __dirname = path.dirname(__filename);     // convierte la ruta del archivo actual en una normal
 
-class ProductManager {
-    constructor(filePath) {
-        this.path = path.resolve(__dirname, '..', filePath);
-    }
+/*class ProductManager {
 
     async getProducts() {
         try {
@@ -62,6 +61,29 @@ class ProductManager {
         products.splice(index, 1);
         await fs.writeFile(this.path, JSON.stringify(products, null, 2));
         return {message: `Producto con id ${id} eliminado`};
+    }
+}
+*/
+class ProductManager {
+    async getProducts() {
+        return await Product.find();
+    }
+
+    async getProductById(id) {
+        return await Product.findById(id);
+    }
+
+    async addProduct(productData) {
+        const newProduct = new Product(productData);
+        return await newProduct.save();
+    }
+
+    async updateProduct(id, productData) {
+        return await Product.findByIdAndUpdate(id, productData, { new: true });
+    }
+
+    async deleteProduct(id) {
+        return await Product.findByIdAndDelete(id);
     }
 }
 

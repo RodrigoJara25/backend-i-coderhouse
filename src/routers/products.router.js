@@ -5,12 +5,28 @@ import { io } from "../app.js";
 const router = Router();
 
 // inicializamos el json
-const productManager = new ProductManager('./data/products.json');
+const productManager = new ProductManager();
 
 // get => obtener datos de los productos
 router.get('/', async(req, res)=>{
-    const products = await productManager.getProducts();
-    res.json(products);
+    try {
+        const { limit = 10, page = 1, sort, query } = req.query;
+
+        // Construir filtro
+        let filter = {};
+        if (query) {
+            // Puedes hacer que query sea por categoría, status, etc.
+            // Ejemplo: ?query=category:Pizzas
+            const [key, value] = query.split(':');
+            filter[key] = value;
+        }
+
+
+        const products = await productManager.getProductsPaginated({ limit, page, sort, filter });
+        res.json(products);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 })
 
 // producto por id

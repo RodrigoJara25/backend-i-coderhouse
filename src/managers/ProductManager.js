@@ -73,6 +73,16 @@ class ProductManager {
         return await Product.findById(id);
     }
 
+    async getProductsPaginated({ limit = 10, page = 1, sort, filter = {} }) {
+        const options = {
+            page: parseInt(page),
+            limit: parseInt(limit),
+            sort: sort ? { price: sort === 'asc' ? 1 : -1 } : undefined,
+            lean: true
+        };
+        return await Product.paginate(filter, options);
+    }
+
     async addProduct(productData) {
         const newProduct = new Product(productData);
         return await newProduct.save();
